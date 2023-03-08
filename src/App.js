@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Col, Container, Row } from 'react-bootstrap';
 import Header from './components/Header';
 import Search from './components/Search';
 import ImageCard from './components/ImageCard';
@@ -25,13 +26,24 @@ const App = () => {
     setWord('');
   };
 
+  const handleDeleteImage = (id) => {
+    setImages(images.filter((image) => image.id !== id));
+  };
+
   return (
     <div>
       <Header title="Images Gallery" />
       <Search word={word} setWord={setWord} handleSubmit={handleSearchSubmit} />
-      {images.map((image, i) => 
-        (<ImageCard key={i} image={image}/>)
-      )}
+      <Container className="mt-4">
+        <Row xs={1} md={3} lg={4}>
+          {images.map((image, i) => (
+            <Col key={i} className="pb-2">
+              <ImageCard image={image} deleteImage={handleDeleteImage}/>
+            </Col>
+          ))}
+        </Row>
+      </Container>
+      
     </div>
   );
 };
